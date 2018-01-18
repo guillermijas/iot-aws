@@ -1,25 +1,27 @@
-%h1 Listing things
+%h1.text-center Cajón inteligente
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th Status
-      %th Desired value
-      %th
-      %th
-      %th
-
-  %tbody
-    - @things.each do |thing|
-      %tr
-        %td= thing.name
-        %td= thing.status
-        %td= thing.desired_value
-        %td= link_to 'Show', thing
-        %td= link_to 'Edit', edit_thing_path(thing)
-        %td= link_to 'Destroy', thing, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
-
-= link_to 'New Thing', new_thing_path
+.jumbotron
+  .row.main-panel
+    .col-md-4.control
+      .title
+        %h2 Temperatura
+      .arrow-up
+        =icon('caret-up')
+      .image
+        =image_tag(image_path('thermometer.png'))
+      .arrow-down
+        =icon('caret-down')
+    .col-md-4.control
+      .title
+        %h2 Luz
+      .arrow-up
+        =icon('caret-up')
+      .image
+        =image_tag(image_path('light-bulb.png'))
+      .arrow-down
+        =icon('caret-down')
+    .col-md-4.control
+      .title
+        %h2 Presencia
+      .image
+        =image_tag(image_path('presence.png'))
