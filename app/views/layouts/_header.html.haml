@@ -1,0 +1,14 @@
+%nav.navbar.navbar-expand-lg.navbar-light.bg-light
+  .container
+    %button.navbar-toggler{'data-target'=>'#navbarSupportedContent', 'data-toggle'=>'collapse', type: 'button'}
+      %span.navbar-toggler-icon
+    #navbarSupportedContent.collapse.navbar-collapse
+      %ul.navbar-nav.mr-auto
+        %li.nav-item
+          =link_to('Panel de control', things_path, class: 'nav-link')
+        %li.nav-item
+          =link_to('Historial', logs_path, class: 'nav-link')
+    %span
+      %ul.nav.navbar-nav.navbar-right.mr-auto
+        %li.nav-item
+          = link_to('Log out', destroy_user_session_path, method: :delete, class: 'nav-link')

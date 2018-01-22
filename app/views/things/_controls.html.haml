@@ -24,7 +24,7 @@
       .luz
         =image_tag(image_path('light-bulb.png'))
         %br
-        = @luz.desired_value
+        = "#{@luz.desired_value} %"
     .arrow-down#bajar-luz
       =icon('caret-down')
   .col-md-4.control
@@ -34,27 +34,52 @@
       =image_tag(image_path('presence.png'))
 
 :javascript
-  $('#subir-temp').on('click', function(){
-    $.ajax({
-      url: "#{update_value_path(@termometro)}?thing[desired_value]=#{@termometro.desired_value + 1}",
-      type: "GET"
-    });
-  });
   $('#bajar-temp').on('click', function(){
+    var new_val = parseInt("#{@termometro.desired_value}");
+    if(new_val <= 16){
+      new_val = 16;
+    }else{
+      new_val = new_val - 1 ;
+    }
     $.ajax({
-      url: "#{update_value_path(@termometro)}?thing[desired_value]=#{@termometro.desired_value - 1}",
+      url: "#{update_value_path(@termometro)}?thing[desired_value]=" + new_val,
       type: "GET"
     });
   });
-  $('#subir-luz').on('click', function(){
+  $('#subir-temp').on('click', function(){
+    var new_val = parseInt("#{@termometro.desired_value}");
+    if(new_val >= 42){
+      new_val = 42;
+    }else{
+      new_val = new_val + 1 ;
+    }
     $.ajax({
-      url: "#{update_value_path(@luz)}?thing[desired_value]=#{@luz.desired_value + 1}",
+      url: "#{update_value_path(@termometro)}?thing[desired_value]=" + new_val,
       type: "GET"
     });
   });
   $('#bajar-luz').on('click', function(){
+    var new_val = parseInt("#{@luz.desired_value}");
+    if(new_val <= 0){
+      new_val = 0;
+    }else{
+      new_val = new_val - 10 ;
+    }
     $.ajax({
-      url: "#{update_value_path(@luz)}?thing[desired_value]=#{@luz.desired_value - 1}",
+      url: "#{update_value_path(@luz)}?thing[desired_value]=" + new_val,
+      type: "GET"
+    });
+  });
+
+  $('#subir-luz').on('click', function(){
+    var new_val = parseInt("#{@luz.desired_value}");
+    if(new_val >= 100){
+      new_val = 100;
+    }else{
+      new_val = new_val + 10 ;
+    }
+    $.ajax({
+      url: "#{update_value_path(@luz)}?thing[desired_value]=" + new_val,
       type: "GET"
     });
   });
