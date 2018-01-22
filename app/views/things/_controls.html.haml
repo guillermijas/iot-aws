@@ -1,0 +1,60 @@
+- @termometro = Thing.first
+- @luz = Thing.second
+- @presencia = Thing.third
+
+.row.main-panel
+  .col-md-4.control
+    .title
+      %h2 Temperatura
+    .arrow-up#subir-temp
+      =icon('caret-up')
+    .image
+      .termometro
+        =image_tag(image_path('thermometer.png'))
+        %br
+        = "#{@termometro.desired_value} ºC"
+    .arrow-down#bajar-temp
+      =icon('caret-down')
+  .col-md-4.control
+    .title
+      %h2 Luz
+    .arrow-up#subir-luz
+      =icon('caret-up')
+    .image
+      .luz
+        =image_tag(image_path('light-bulb.png'))
+        %br
+        = @luz.desired_value
+    .arrow-down#bajar-luz
+      =icon('caret-down')
+  .col-md-4.control
+    .title
+      %h2 Presencia
+    .image
+      =image_tag(image_path('presence.png'))
+
+:javascript
+  $('#subir-temp').on('click', function(){
+    $.ajax({
+      url: "#{update_value_path(@termometro)}?thing[desired_value]=#{@termometro.desired_value + 1}",
+      type: "GET"
+    });
+  });
+  $('#bajar-temp').on('click', function(){
+    $.ajax({
+      url: "#{update_value_path(@termometro)}?thing[desired_value]=#{@termometro.desired_value - 1}",
+      type: "GET"
+    });
+  });
+  $('#subir-luz').on('click', function(){
+    $.ajax({
+      url: "#{update_value_path(@luz)}?thing[desired_value]=#{@luz.desired_value + 1}",
+      type: "GET"
+    });
+  });
+  $('#bajar-luz').on('click', function(){
+    $.ajax({
+      url: "#{update_value_path(@luz)}?thing[desired_value]=#{@luz.desired_value - 1}",
+      type: "GET"
+    });
+  });

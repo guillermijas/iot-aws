@@ -1,27 +1,2 @@
-%h1.text-center Cajón inteligente
-
-.jumbotron
-  .row.main-panel
-    .col-md-4.control
-      .title
-        %h2 Temperatura
-      .arrow-up
-        =icon('caret-up')
-      .image
-        =image_tag(image_path('thermometer.png'))
-      .arrow-down
-        =icon('caret-down')
-    .col-md-4.control
-      .title
-        %h2 Luz
-      .arrow-up
-        =icon('caret-up')
-      .image
-        =image_tag(image_path('light-bulb.png'))
-      .arrow-down
-        =icon('caret-down')
-    .col-md-4.control
-      .title
-        %h2 Presencia
-      .image
-        =image_tag(image_path('presence.png'))
+.jumbotron#main
+   = render partial: 'controls'
