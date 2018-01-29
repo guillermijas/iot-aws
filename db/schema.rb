@@ -13,11 +13,12 @@
 ActiveRecord::Schema.define(version: 20180118183502) do
 
   create_table "logs", force: :cascade do |t|
-    t.integer "thing_id"
-    t.string "action"
+    t.integer "status"
+    t.integer "temperature"
+    t.integer "light"
+    t.boolean "presence"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["thing_id"], name: "index_logs_on_thing_id"
   end
 
   create_table "things", force: :cascade do |t|

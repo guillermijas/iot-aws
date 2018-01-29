@@ -1,23 +1,100 @@
-%h1 Listing logs
+%h1 Historial
 
-%table
-  %thead
-    %tr
-      %th Thing
-      %th Action
-      %th
-      %th
-      %th
+.canvas
+  %canvas#temperature
 
-  %tbody
-    - @logs.each do |log|
-      %tr
-        %td= log.thing
-        %td= log.action
-        %td= link_to 'Show', log
-        %td= link_to 'Edit', edit_log_path(log)
-        %td= link_to 'Destroy', log, method: :delete, data: { confirm: 'Are you sure?' }
+.canvas
+  %canvas#light
 
-%br
 
-= link_to 'New Log', new_log_path
+:javascript
+  var ctx = document.getElementById('temperature').getContext('2d');
+  var chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: #{ raw @log_hour.to_json },
+      datasets: [{
+        label: 'Temperatura',
+        data: #{ raw @log_temp.to_json },
+        fill: false,
+        backgroundColor: '#dd0020',
+        borderColor: '#dd0020'
+      }]
+    },
+    options: {
+      tooltips: {
+        mode: 'index',
+        intersect: false
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      scales: {
+        xAxes: [{
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Tiempo (mm:ss)'
+          }
+        }],
+        yAxes: [{
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Temperatura (ºC)'
+          },
+          ticks: {
+            max: 42,
+            min: 18
+          }
+        }]
+      }
+    }
+  });
+
+
+  var ctx2 = document.getElementById('light').getContext('2d');
+    var chart2 = new Chart(ctx2, {
+      type: 'line',
+      data: {
+        labels: #{ raw @log_hour.to_json },
+        datasets: [{
+          label: 'Luz',
+          data: #{ raw @log_luz.to_json },
+          fill: false,
+          backgroundColor: '#3300DD',
+          borderColor: '#3300DD'
+        }]
+      },
+      options: {
+        tooltips: {
+          mode: 'index',
+          intersect: false
+        },
+        hover: {
+          mode: 'nearest',
+          intersect: true
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Tiempo (mm:ss)'
+            }
+          }],
+          yAxes: [{
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Luminosidad (%)'
+            },
+            ticks: {
+              max: 110,
+              min: -10
+            }
+          }]
+        }
+      }
+    });
