@@ -4,7 +4,12 @@
 .center-div
   = button_to('Modo encendido', mode_on_path, class: "btn on #{ termometro.status == 'on' ? 'btn-primary' : 'btn-secondary'}")
   = button_to('Modo apagado', mode_off_path, class: "btn off #{ termometro.status == 'off' ? 'btn-primary' : 'btn-secondary'}")
-
+  = form_tag (mode_presence_path) do
+    .input-group
+      .input-group-prepend
+        .input-group-text
+          =submit_tag('Modo presencia', class: "btn off #{ termometro.status == 'presence' ? 'btn-primary' : 'btn-secondary' }")
+      = text_field_tag(:period, @presencia.desired_value, class: 'form-control', placeholder: 5000)
 
 .row.main-panel
   .col-md-4.control
