@@ -3,7 +3,7 @@ class LogsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @logs = Log.all
+    @logs = Log.last(30)
     @log_temp = @logs.pluck(:temperature)
     @log_luz = @logs.pluck(:light)
     @log_hour = @logs.pluck(:created_at)

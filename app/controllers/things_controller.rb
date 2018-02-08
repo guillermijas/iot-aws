@@ -32,9 +32,10 @@ class ThingsController < ApplicationController
   end
 
   def mode_presence
-    Thing.termometro.update(status: 'presence')
-    Thing.luz.update(status: 'presence')
-    send_mqtt_status(2)
+    Thing.termometro.update!(status: 'presence')
+    Thing.luz.update!(status: 'presence')
+    Thing.presencia.update!(desired_value: params[:period]) if params[:period].present?
+    send_mqtt_status(2, params[:period])
     redirect_to things_path
   end
 
@@ -42,9 +43,15 @@ class ThingsController < ApplicationController
 
   private
 
-  def send_mqtt_status(status_code)
+  def send_mqtt_status(status_code, periodo = nil)
     client = Thing.init_mqtt
-    message = { state: { desired: { estadoFuncionamiento: status_code } } }.to_json
+    message = if periodo.blank?
+                { state: { desired: { estadoFuncionamiento: status_code } } }.to_json
+              else
+                { state: { desired: { estadoFuncionamiento: status_code,
+                                      periodoFuncionamiento: periodo } } }.to_json
+              end
+
     topic = '$aws/things/raspberrypi04/shadow/update'
     client.publish(topic, message, _retain = false, _qos = 1)
   end

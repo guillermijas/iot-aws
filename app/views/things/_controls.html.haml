@@ -2,14 +2,12 @@
 - luz = Thing.second
 
 .center-div
-  = button_to('Modo encendido', mode_on_path, class: "btn #{ termometro.status == 'on' ? 'btn-primary' : 'btn-secondary'}")
-  = button_to('Modo apagado', mode_off_path, class: "btn #{ termometro.status == 'off' ? 'btn-primary' : 'btn-secondary'}")
-  = button_to('Modo presencia', mode_presence_path, class: "btn #{ termometro.status == 'presence' ? 'btn-primary' : 'btn-secondary'}")
+  = button_to('Modo encendido', mode_on_path, class: "btn on #{ termometro.status == 'on' ? 'btn-primary' : 'btn-secondary'}")
+  = button_to('Modo apagado', mode_off_path, class: "btn off #{ termometro.status == 'off' ? 'btn-primary' : 'btn-secondary'}")
+
 
 .row.main-panel
   .col-md-4.control
-    .title
-      %h3 Temperatura
     .arrow-up#subir-temp
       =icon('caret-up')
     .image
@@ -20,8 +18,6 @@
     .arrow-down#bajar-temp
       =icon('caret-down')
   .col-md-4.control
-    .title
-      %h3 Luz
     .arrow-up#subir-luz
       =icon('caret-up')
     .image
@@ -32,8 +28,6 @@
     .arrow-down#bajar-luz
       =icon('caret-down')
   .col-md-4.control
-    .title
-      %h3 Presencia
     .arrow-up{style: 'color: transparent'}
       =icon('caret-up')
     #presencia.image
@@ -101,3 +95,4 @@
       }, 2000); // In every 30 seconds
     });
   });
+
