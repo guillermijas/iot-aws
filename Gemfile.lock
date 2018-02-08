@@ -766,6 +766,7 @@ PLATFORMS
 DEPENDENCIES
   awesome_print
   aws-sdk (~> 3)
+  aws-sdk-iot
   bootstrap (~> 4.0.0.beta3)
   byebug
   capybara (~> 2.13)

@@ -7,6 +7,7 @@ end
 
 gem 'awesome_print', require: 'ap'
 gem 'aws-sdk', '~> 3'
+gem 'aws-sdk-iot'
 gem 'bootstrap', '~> 4.0.0.beta3'
 gem 'coffee-rails', '~> 4.2'
 gem 'devise'

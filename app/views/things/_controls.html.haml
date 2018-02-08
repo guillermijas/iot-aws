@@ -1,87 +1,103 @@
-- @termometro = Thing.first
-- @luz = Thing.second
-- @presencia = Thing.third
+- termometro = Thing.first
+- luz = Thing.second
+
+.center-div
+  = button_to('Modo encendido', mode_on_path, class: "btn #{ termometro.status == 'on' ? 'btn-primary' : 'btn-secondary'}")
+  = button_to('Modo apagado', mode_off_path, class: "btn #{ termometro.status == 'off' ? 'btn-primary' : 'btn-secondary'}")
+  = button_to('Modo presencia', mode_presence_path, class: "btn #{ termometro.status == 'presence' ? 'btn-primary' : 'btn-secondary'}")
 
 .row.main-panel
   .col-md-4.control
     .title
-      %h2 Temperatura
+      %h3 Temperatura
     .arrow-up#subir-temp
       =icon('caret-up')
     .image
       .termometro
-        =image_tag(image_path("thermometer-#{(@termometro.desired_value/2)*2}.png"))
+        =image_tag(image_path("thermometer-#{(termometro.desired_value/2)*2}.png"))
         %br
-        = "#{@termometro.desired_value} ºC"
+        = "#{termometro.desired_value} ºC"
     .arrow-down#bajar-temp
       =icon('caret-down')
   .col-md-4.control
     .title
-      %h2 Luz
+      %h3 Luz
     .arrow-up#subir-luz
       =icon('caret-up')
     .image
       .luz
-        =image_tag(image_path("light-bulb-#{@luz.desired_value}.png"))
+        =image_tag(image_path("light-bulb-#{luz.desired_value}.png"))
         %br
-        = "#{@luz.desired_value} %"
+        = "#{luz.desired_value} %"
     .arrow-down#bajar-luz
       =icon('caret-down')
   .col-md-4.control
     .title
-      %h2 Presencia
+      %h3 Presencia
     .arrow-up{style: 'color: transparent'}
       =icon('caret-up')
-    .image
-      =image_tag(image_path('no-presence.png'))
+    #presencia.image
+      = render partial: 'presencia'
 
 :javascript
   $('#bajar-temp').on('click', function(){
-    var new_val = parseInt("#{@termometro.desired_value}");
+    var new_val = parseInt("#{termometro.desired_value}");
     if(new_val <= 20){
       new_val = 20;
     }else{
       new_val = new_val - 1 ;
     }
     $.ajax({
-      url: "#{update_value_path(@termometro)}?thing[desired_value]=" + new_val,
+      url: "#{update_value_path(termometro)}?thing[desired_value]=" + new_val,
       type: "GET"
     });
   });
   $('#subir-temp').on('click', function(){
-    var new_val = parseInt("#{@termometro.desired_value}");
+    var new_val = parseInt("#{termometro.desired_value}");
     if(new_val >= 40){
       new_val = 40;
     }else{
       new_val = new_val + 1 ;
     }
     $.ajax({
-      url: "#{update_value_path(@termometro)}?thing[desired_value]=" + new_val,
+      url: "#{update_value_path(termometro)}?thing[desired_value]=" + new_val,
       type: "GET"
     });
   });
   $('#bajar-luz').on('click', function(){
-    var new_val = parseInt("#{@luz.desired_value}");
+    var new_val = parseInt("#{luz.desired_value}");
     if(new_val <= 0){
       new_val = 0;
     }else{
       new_val = new_val - 10 ;
     }
     $.ajax({
-      url: "#{update_value_path(@luz)}?thing[desired_value]=" + new_val,
+      url: "#{update_value_path(luz)}?thing[desired_value]=" + new_val,
       type: "GET"
     });
   });
 
   $('#subir-luz').on('click', function(){
-    var new_val = parseInt("#{@luz.desired_value}");
+    var new_val = parseInt("#{luz.desired_value}");
     if(new_val >= 100){
       new_val = 100;
     }else{
       new_val = new_val + 10 ;
     }
     $.ajax({
-      url: "#{update_value_path(@luz)}?thing[desired_value]=" + new_val,
+      url: "#{update_value_path(luz)}?thing[desired_value]=" + new_val,
       type: "GET"
+    });
+  });
+
+  $(function() {
+    $(document).ready(function() {
+      setInterval(function() {
+        jQuery.ajax({
+          url: "#{ reload_presence_path }",
+          type: "GET",
+          dataType: "script"
+        });
+      }, 2000); // In every 30 seconds
     });
   });
