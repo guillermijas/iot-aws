@@ -3,9 +3,12 @@ class LogsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @logs = Log.last(30)
+    @logs = Log.last(50)
     @log_temp = @logs.pluck(:temperature)
     @log_luz = @logs.pluck(:light)
+    ap @log_luz
+    @log_luz.map!{ |x| (x*100 / 127) }
+    ap @log_luz
     @log_hour = @logs.pluck(:created_at)
     @log_hour.map! { |hour| hour.strftime('%M:%S') }
   end

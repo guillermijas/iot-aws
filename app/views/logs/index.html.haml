@@ -22,6 +22,7 @@
       }]
     },
     options: {
+      animation: false,
       tooltips: {
         mode: 'index',
         intersect: false
@@ -68,6 +69,7 @@
         }]
       },
       options: {
+        animation: false,
         tooltips: {
           mode: 'index',
           intersect: false
@@ -98,3 +100,7 @@
         }
       }
     });
+
+    setTimeout(function(){
+      window.location.reload(1);
+    }, 1000);
