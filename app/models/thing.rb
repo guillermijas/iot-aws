@@ -14,10 +14,10 @@ class Thing < ApplicationRecord
 
   def self.init_mqtt
     require 'mqtt'
-    _client = MQTT::Client.connect(host: 'a3hsjmb0q4i06f.iot.eu-west-1.amazonaws.com',
+    _client = MQTT::Client.connect(host: 'i06f.iot.eu-west-1.amazonaws.com',
                                    port: 8883,
                                    ssl: true,
-                                   cert_file: 'lib/assets/certs/af9747605b-certificate.pem.crt',
-                                   key_file: 'lib/assets/certs/af9747605b-private.pem.key')
+                                   cert_file: 'lib/assets/certs/605b-certificate.pem.crt',
+                                   key_file: 'lib/assets/certs/605b-private.pem.key')
   end
 end

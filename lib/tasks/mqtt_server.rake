@@ -1,11 +1,11 @@
 namespace :mqtt_server do
   task listen: :environment do
     ap 'Iniciando cliente de escucha'
-    client = MQTT::Client.connect(host: 'a3hsjmb0q4i06f.iot.eu-west-1.amazonaws.com',
+    client = MQTT::Client.connect(host: 'i06f.iot.eu-west-1.amazonaws.com',
                                   port: 8883,
                                   ssl: true,
-                                  cert_file: 'lib/assets/certs/af9747605b-certificate.pem.crt',
-                                  key_file: 'lib/assets/certs/af9747605b-private.pem.key')
+                                  cert_file: 'lib/assets/certs/605b-certificate.pem.crt',
+                                  key_file: 'lib/assets/certs/605b-private.pem.key')
     client.subscribe('$aws/things/raspberrypi04/shadow/update')
     ap 'Suscrito a Shadow Updates'
     client.get do |_topic, message|
